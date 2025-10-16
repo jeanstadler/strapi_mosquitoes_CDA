@@ -39,3 +39,47 @@ async function getActor(movieId) { //Fonction pour récupérer les acteurs
         return actors;
     }
 }
+
+module.exports = { //rendu de la requête exporté, servant à récupérer les éléments demandés de TMDb
+
+    async fetchFrenchMoviesFrom2010() {
+    try {
+      const response = await axios.get(`${TMDB_BASE_URL}/discover/movie`, {
+        params: {
+          api_key: TMDB_API_KEY,
+          language: 'fr-FR',
+          region: 'FR',
+          sort_by: 'popularity.desc',
+          'primary_release_date.gte': '2010-01-01',
+          with_original_language: 'fr',
+          'with_runtime.gte': 80,
+          page: 1,
+        },
+      });
+
+      const movies = response.data.results;
+
+      const moviesFormatted = await Promise.all(
+        movies.map(async movie => {
+          const directors = await getDirector(movie.id);
+          const actors = await getActor(movie.id)
+
+          return {
+            id: movie.id,
+            titre: movie.title,
+            description: movie.overview,
+            date_de_sortie: movie.release_date,
+            realisateur: directors, 
+            affiche: movie.poster_path ? `${TMDB_IMAGE_BASE_URL}${movie.poster_path}` : null,
+            actor: actors,           
+          };
+        })
+      );
+
+      return moviesFormatted;
+    } catch (e) {
+      console.error('Erreur TMDb:', e.message);
+      return [];
+    }
+  }
+}
