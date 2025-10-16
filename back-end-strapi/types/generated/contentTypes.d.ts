@@ -479,6 +479,7 @@ export interface ApiMovieMovie extends Struct.CollectionTypeSchema {
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::movie.movie'> &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    realisateur: Schema.Attribute.JSON;
     titre: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
