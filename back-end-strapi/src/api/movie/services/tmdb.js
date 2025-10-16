@@ -24,13 +24,13 @@ async function getDirector(movieId) { //Fonction pour récupérer les réalisate
 
 async function getActor(movieId) { //Fonction pour récupérer les acteurs
     try{
-        // Récupération de la route pour trouver les réalisateurs
+        // Récupération de la route pour trouver les acteurs
         const response = await axios.get(`${TMDB_BASE_URL}/movie/${movieId}/credits`, {
             params: {api_key: TMDB_API_KEY}
         }); 
 
         // Puis on stock les 10 premiers acteurs (avec .slice) dans une constante 'actors'
-        const actors = response.data.cast.slice(0, 10).map(act =>({name: act.name}));
+        const actors = response.data.cast.slice(0, 10).map(act =>({id: act.id}));
 
         return actors;
     }catch(e){
