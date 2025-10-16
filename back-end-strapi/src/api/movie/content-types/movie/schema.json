@@ -22,6 +22,12 @@
     },
     "realisateur": {
       "type": "string"
+    },
+    "actors": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::actor.actor",
+      "mappedBy": "movies"
     }
   }
 }

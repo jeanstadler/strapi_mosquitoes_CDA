@@ -19,6 +19,12 @@
     },
     "date_de_naissance": {
       "type": "date"
+    },
+    "movies": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::movie.movie",
+      "inversedBy": "actors"
     }
   }
 }
