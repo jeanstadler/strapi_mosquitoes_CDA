@@ -11,10 +11,7 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "nom": {
-      "type": "string"
-    },
-    "prenom": {
+    "prenom_nom": {
       "type": "string"
     },
     "date_de_naissance": {

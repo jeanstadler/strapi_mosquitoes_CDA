@@ -449,8 +449,7 @@ export interface ApiActorActor extends Struct.CollectionTypeSchema {
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::actor.actor'> &
       Schema.Attribute.Private;
     movies: Schema.Attribute.Relation<'manyToMany', 'api::movie.movie'>;
-    nom: Schema.Attribute.String;
-    prenom: Schema.Attribute.String;
+    prenom_nom: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
