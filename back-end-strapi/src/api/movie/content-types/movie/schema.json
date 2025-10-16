@@ -20,9 +20,6 @@
     "date_de_sortie": {
       "type": "date"
     },
-    "realisateur": {
-      "type": "string"
-    },
     "actors": {
       "type": "relation",
       "relation": "manyToMany",
