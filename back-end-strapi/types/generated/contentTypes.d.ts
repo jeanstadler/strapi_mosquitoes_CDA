@@ -449,6 +449,7 @@ export interface ApiActorActor extends Struct.CollectionTypeSchema {
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::actor.actor'> &
       Schema.Attribute.Private;
     movies: Schema.Attribute.Relation<'manyToMany', 'api::movie.movie'>;
+    photo: Schema.Attribute.String;
     prenom_nom: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
@@ -469,6 +470,7 @@ export interface ApiMovieMovie extends Struct.CollectionTypeSchema {
   };
   attributes: {
     actors: Schema.Attribute.Relation<'manyToMany', 'api::actor.actor'>;
+    affiche: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

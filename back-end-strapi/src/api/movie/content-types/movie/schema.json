@@ -23,6 +23,9 @@
     "realisateur": {
       "type": "json"
     },
+    "affiche": {
+      "type": "string"
+    },
     "actors": {
       "type": "relation",
       "relation": "manyToMany",

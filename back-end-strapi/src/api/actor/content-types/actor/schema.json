@@ -17,6 +17,9 @@
     "date_de_naissance": {
       "type": "date"
     },
+    "photo": {
+      "type": "string"
+    },
     "movies": {
       "type": "relation",
       "relation": "manyToMany",
