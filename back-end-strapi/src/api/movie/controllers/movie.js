@@ -13,7 +13,7 @@ module.exports = createCoreController('api::movie.movie', ({ strapi }) => ({
     // try {
     //   const count = await strapi
     //     .service('api::movie.movie')
-    //     .syncFrenchMoviesFrom2000();
+    //     .syncFrenchMoviesFrom();
 
     //   ctx.send({ message: `Synchronisation réussie : ${count} films importés.` });
     // } catch (error) {
