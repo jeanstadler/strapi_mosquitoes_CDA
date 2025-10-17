@@ -11,6 +11,10 @@
   },
   "pluginOptions": {},
   "attributes": {
+    "tmdb_id": {
+      "type": "integer",
+      "unique": true
+    },
     "prenom_nom": {
       "type": "string"
     },

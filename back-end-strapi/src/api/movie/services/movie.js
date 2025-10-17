@@ -24,7 +24,7 @@ module.exports = createCoreService('api::movie.movie', ({ strapi }) => ({
       for (const actorId of movie.actor) {
         // On vérifie si l'acteur existe déjà dans la base de données
         let actor = await strapi.db.query('api::actor.actor').findOne({
-          where: { id: actorId },
+          where: { tmdb_id: actorId },
         });
 
         if (!actor) {
@@ -37,7 +37,7 @@ module.exports = createCoreService('api::movie.movie', ({ strapi }) => ({
 
           actor = await strapi.db.query('api::actor.actor').create({
             data: {
-              id: actorFound.id,
+              tmdb_id: actorFound.id,
               prenom_nom: actorFound.name,
               date_de_naissance: actorFound.birthday,
               photo: actorFound.profile_path ? `https://image.tmdb.org/t/p/w500${actorFound.profile_path}` : null,
@@ -45,18 +45,21 @@ module.exports = createCoreService('api::movie.movie', ({ strapi }) => ({
           });
         }
 
-        actorsToConnect.push(actor.id);
+        if(actor && actor.id){
+            actorsToConnect.push(actor.id);
+        }
+
       }
 
       // On vérifie si le film existe déjà dans la base de données
       const existingMovie = await strapi.db.query('api::movie.movie').findOne({
-        where: { id: movie.id },
+        where: { tmdb_id: movie.id },
       });
 
       if (!existingMovie) {
         await strapi.db.query('api::movie.movie').create({
           data: {
-            id: movie.id,
+            tmdb_id: movie.id,
             titre: movie.titre,
             description: movie.description,
             date_de_sortie: movie.date_de_sortie,

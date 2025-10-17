@@ -30,7 +30,7 @@ async function getActor(movieId) { //Fonction pour récupérer les acteurs
         }); 
 
         // Puis on stock les 10 premiers acteurs (avec .slice) dans une constante 'actors'
-        const actors = response.data.cast.slice(0, 10).map(act =>({id: act.id}));
+        const actors = response.data.cast.slice(0, 10).map(act =>act.id);
 
         return actors;
     }catch(e){
@@ -66,7 +66,7 @@ module.exports = { //rendu de la requête exporté, servant à récupérer les �
           const actorsId = await getActor(movie.id)
 
           return {
-            id: movie.id,
+            tmdb_id: movie.id,
             titre: movie.title,
             description: movie.overview,
             date_de_sortie: movie.release_date,
