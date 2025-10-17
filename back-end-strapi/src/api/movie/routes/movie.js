@@ -6,7 +6,25 @@
 
 const { createCoreRouter } = require('@strapi/strapi').factories;
 
-module.exports = createCoreRouter('api::movie.movie');
+// module.exports = createCoreRouter('api::movie.movie');
+
+module.exports = () => {
+  // Récupère le router standard (CRUD)
+  const router = createCoreRouter('api::movie.movie');
+
+  // Ajoute une route POST custom pour synchroniser les films TMDb
+  router.routes.push({
+    method: 'POST',
+    path: '/movies/sync-french',           // ton endpoint
+    // handler: 'movie.syncFrenchMovies',     // méthode du controller
+    handler: 'api::movie.movie.syncFrenchMovies',     // méthode du controller
+    config: {
+      auth: false,                          // ou true pour restreindre aux admins
+    },
+  });
+
+  return router;
+};
 
 // module.exports = {
 //   routes: [
