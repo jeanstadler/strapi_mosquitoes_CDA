@@ -452,7 +452,7 @@ export interface ApiActorActor extends Struct.CollectionTypeSchema {
     photo: Schema.Attribute.String;
     prenom_nom: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
-    tmdb_id: Schema.Attribute.Integer & Schema.Attribute.Unique;
+    tmdb_id: Schema.Attribute.BigInteger & Schema.Attribute.Unique;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -483,7 +483,7 @@ export interface ApiMovieMovie extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     realisateur: Schema.Attribute.JSON;
     titre: Schema.Attribute.String;
-    tmdb_id: Schema.Attribute.Integer & Schema.Attribute.Unique;
+    tmdb_id: Schema.Attribute.BigInteger & Schema.Attribute.Unique;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

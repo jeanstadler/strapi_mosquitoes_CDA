@@ -19,6 +19,9 @@ module.exports = createCoreService('api::movie.movie', ({ strapi }) => ({
     const movies = await tmdbService.fetchFrenchMovies();
 
     for (const movie of movies) {
+
+      
+
       const actorsToConnect = [];
 
       for (const actorId of movie.actor) {
@@ -45,21 +48,28 @@ module.exports = createCoreService('api::movie.movie', ({ strapi }) => ({
           });
         }
 
-        if(actor && actor.id){
-            actorsToConnect.push(actor.id);
+        if (actor && actor.id) {
+          actorsToConnect.push(actor.id);
         }
 
       }
 
       // On vérifie si le film existe déjà dans la base de données
       const existingMovie = await strapi.db.query('api::movie.movie').findOne({
-        where: { tmdb_id: movie.id },
+        where: { tmdb_id: movie.tmdb_id },
       });
 
+      if (!movie.titre || !movie.tmdb_id) {
+        console.warn('Film ignoré car incomplet :', movie);
+        continue; // passe au suivant
+      }
+
       if (!existingMovie) {
+        // const actorsToConnectClean = actorsToConnect.filter(a => a !== undefined);
+
         await strapi.db.query('api::movie.movie').create({
           data: {
-            tmdb_id: movie.id,
+            tmdb_id: movie.tmdb_id,
             titre: movie.titre,
             description: movie.description,
             date_de_sortie: movie.date_de_sortie,

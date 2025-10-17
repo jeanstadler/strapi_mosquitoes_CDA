@@ -12,7 +12,7 @@
   "pluginOptions": {},
   "attributes": {
     "tmdb_id": {
-      "type": "integer",
+      "type": "biginteger",
       "unique": true
     },
     "prenom_nom": {
