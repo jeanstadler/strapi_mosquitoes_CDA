@@ -24,7 +24,7 @@ module.exports = createCoreService('api::movie.movie', ({ strapi }) => ({
 
       const actorsToConnect = [];
 
-      for (const actorId of movie.actor) {
+      for (const actorId of movie.actors) {
         // On vérifie si l'acteur existe déjà dans la base de données
         let actor = await strapi.db.query('api::actor.actor').findOne({
           where: { tmdb_id: actorId },
@@ -75,7 +75,7 @@ module.exports = createCoreService('api::movie.movie', ({ strapi }) => ({
             date_de_sortie: movie.date_de_sortie,
             realisateur: movie.realisateur,
             affiche: movie.affiche,
-            actor: actorsToConnect.map(id => ({ id })),
+            actors: actorsToConnect.map(id => ({ id })),
           },
         });
       }

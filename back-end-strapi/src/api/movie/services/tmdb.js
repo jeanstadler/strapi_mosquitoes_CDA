@@ -72,7 +72,7 @@ module.exports = { //rendu de la requête exporté, servant à récupérer les �
             date_de_sortie: movie.release_date,
             realisateur: directors, 
             affiche: movie.poster_path ? `${TMDB_IMAGE_BASE_URL}${movie.poster_path}` : null,
-            actor: actorsId,           
+            actors: actorsId,           
           };
         })
       );
