@@ -42,7 +42,7 @@ async function getActor(movieId) { //Fonction pour récupérer les acteurs
 
 module.exports = { //rendu de la requête exporté, servant à récupérer les éléments demandés de TMDb
 
-    async fetchFrenchMoviesFrom2010() {
+    async fetchFrenchMovies() {
     try {
       const response = await axios.get(`${TMDB_BASE_URL}/discover/movie`, {
         params: {
@@ -50,7 +50,8 @@ module.exports = { //rendu de la requête exporté, servant à récupérer les �
           language: 'fr-FR',
           region: 'FR',
           sort_by: 'popularity.desc',
-          'primary_release_date.gte': '2010-01-01',
+          'primary_release_date.gte': '2025-10-07',
+          'primary_release_date.lte': '2025-10-21',
           with_original_language: 'fr',
           'with_runtime.gte': 80,
           page: 1,
@@ -62,7 +63,7 @@ module.exports = { //rendu de la requête exporté, servant à récupérer les �
       const moviesFormatted = await Promise.all(
         movies.map(async movie => {
           const directors = await getDirector(movie.id);
-          const actors = await getActor(movie.id)
+          const actorsId = await getActor(movie.id)
 
           return {
             id: movie.id,
@@ -71,14 +72,14 @@ module.exports = { //rendu de la requête exporté, servant à récupérer les �
             date_de_sortie: movie.release_date,
             realisateur: directors, 
             affiche: movie.poster_path ? `${TMDB_IMAGE_BASE_URL}${movie.poster_path}` : null,
-            actor: actors,           
+            actor: actorsId,           
           };
         })
       );
 
       return moviesFormatted;
     } catch (e) {
-      console.error('Erreur TMDb:', e.message);
+      console.error('Erreur requête fetch TMDb :', e.message);
       return [];
     }
   }
