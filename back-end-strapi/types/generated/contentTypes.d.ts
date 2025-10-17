@@ -438,7 +438,7 @@ export interface ApiActorActor extends Struct.CollectionTypeSchema {
     singularName: 'actor';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
@@ -467,7 +467,7 @@ export interface ApiMovieMovie extends Struct.CollectionTypeSchema {
     singularName: 'movie';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     actors: Schema.Attribute.Relation<'manyToMany', 'api::actor.actor'>;
