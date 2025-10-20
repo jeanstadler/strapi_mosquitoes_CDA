@@ -20,9 +20,7 @@ module.exports = createCoreService('api::movie.movie', ({ strapi }) => ({
 
     for (const movie of movies) {
 
-      
-
-      const actorsToConnect = [];
+      const actorsToConnect = []; // Tableau d'acteurs qui seront liés au film
 
       for (const actorId of movie.actors) {
         // On vérifie si l'acteur existe déjà dans la base de données
@@ -38,6 +36,7 @@ module.exports = createCoreService('api::movie.movie', ({ strapi }) => ({
 
           const actorFound = actorResponse.data;
 
+          // Création d'un acteur avec les différents éléments nécessaires
           actor = await strapi.db.query('api::actor.actor').create({
             data: {
               tmdb_id: actorFound.id,
@@ -48,10 +47,10 @@ module.exports = createCoreService('api::movie.movie', ({ strapi }) => ({
           });
         }
 
+        // Vérification pour voir si l'acteur a bien été créé avant de l'attribuer au tableau actorsToConnect
         if (actor && actor.id) {
           actorsToConnect.push(actor.id);
         }
-
       }
 
       // On vérifie si le film existe déjà dans la base de données
@@ -59,14 +58,15 @@ module.exports = createCoreService('api::movie.movie', ({ strapi }) => ({
         where: { tmdb_id: movie.tmdb_id },
       });
 
+      // Vérifie si on retrouve bien au moins le titre du film et son id TMDb
       if (!movie.titre || !movie.tmdb_id) {
         console.warn('Film ignoré car incomplet :', movie);
-        continue; // passe au suivant
+        continue; // Passe au film suivant suivant
       }
 
+      // On vérifie si le film n'existe pas en base de données avant de la créer
       if (!existingMovie) {
-        // const actorsToConnectClean = actorsToConnect.filter(a => a !== undefined);
-
+        // Création du film avec les éléments nécessaires
         await strapi.db.query('api::movie.movie').create({
           data: {
             tmdb_id: movie.tmdb_id,
@@ -75,7 +75,7 @@ module.exports = createCoreService('api::movie.movie', ({ strapi }) => ({
             date_de_sortie: movie.date_de_sortie,
             realisateur: movie.realisateur,
             affiche: movie.affiche,
-            actors: actorsToConnect.map(id => ({ id })),
+            actors: actorsToConnect.map(id => ({ id })), // On récupère les acteurs du tableau pour faire le lien avec ce film
           },
         });
       }

@@ -45,21 +45,22 @@ module.exports = { //rendu de la requête exporté, servant à récupérer les �
     async fetchFrenchMovies() {
     try {
       const response = await axios.get(`${TMDB_BASE_URL}/discover/movie`, {
-        params: {
+        params: { // Paramètres des films qu'on va importer
           api_key: TMDB_API_KEY,
           language: 'fr-FR',
-          region: 'FR',
+          region: 'FR', 
           sort_by: 'popularity.desc',
-          'primary_release_date.gte': '2025-10-07',
-          'primary_release_date.lte': '2025-10-21',
-          with_original_language: 'fr',
-          'with_runtime.gte': 80,
+          'primary_release_date.gte': '2025-10-07', // Filtre la date de sortie plus grande que...
+          'primary_release_date.lte': '2025-10-21', // Filtre la date de sortie plus petite que...
+          with_original_language: 'fr', //film français
+          'with_runtime.gte': 80, // Durée du film en minutes
           page: 1,
         },
       });
 
       const movies = response.data.results;
 
+      // On prépare un tableau avec les différents éléments importants que l'on souhaite récupérer du film
       const moviesFormatted = await Promise.all(
         movies.map(async movie => {
           const directors = await getDirector(movie.id);
