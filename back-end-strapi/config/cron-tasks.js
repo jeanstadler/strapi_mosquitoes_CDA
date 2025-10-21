@@ -13,7 +13,7 @@ module.exports = {
         }
     },
     options: {
-      rule: "*/2 * * * *",
+      rule: "* 3 * * *",
       tz: "Europe/Paris"
     },
   },
