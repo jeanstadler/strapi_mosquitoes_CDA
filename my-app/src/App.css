@@ -29,6 +29,9 @@ body {
   max-width: 1440px;
   margin: 0 auto;
   padding: 0 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .logo-section {
@@ -119,6 +122,21 @@ body {
   box-shadow: 0 0 10px rgba(6, 182, 212, 0.1);
 }
 
+.admin_login_section {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  color: #e4e4e7;
+}
+
+.admin_login {
+  color: inherit;
+}
+
+.admin_login_section:hover {
+  color: #535bf2;
+}
+
 .back-button:hover {
   background-color: #27272a;
   border-color: rgba(6, 182, 212, 0.3);
@@ -180,7 +198,7 @@ body {
   box-shadow: 0 0 15px rgba(6, 182, 212, 0.3), 0 0 30px rgba(6, 182, 212, 0.1);
 }
 
-.search-input.focused ~ .search-icon {
+.search-input.focused~.search-icon {
   color: #06b6d4;
   text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
 }
@@ -631,6 +649,7 @@ body {
 
 /* Responsive Design - Mobile */
 @media (max-width: 768px) {
+
   /* Header responsive */
   .header {
     padding: 1rem 0;
