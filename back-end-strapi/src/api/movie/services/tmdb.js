@@ -57,8 +57,8 @@ module.exports = { //rendu de la requête exporté, servant à récupérer les �
             language: 'fr-FR',
             region: 'FR',
             sort_by: 'popularity.desc',
-            'primary_release_date.gte': '2025-10-07', // Filtre la date de sortie plus grande que...
-            'primary_release_date.lte': '2025-10-21', // Filtre la date de sortie plus petite que...
+            'primary_release_date.gte': '2025-09-01', // Filtre la date de sortie plus grande que...
+            'primary_release_date.lte': '2025-10-31', // Filtre la date de sortie plus petite que...
             with_original_language: 'fr', // Films français
             'with_runtime.gte': 80, // Durée du film en minutes
             page: currentPage,
@@ -74,7 +74,7 @@ module.exports = { //rendu de la requête exporté, servant à récupérer les �
         maxPages = data.total_pages;
         currentPage++;
 
-        await new Promise(r => setTimeout(r, 5000));
+        await new Promise(r => setTimeout(r, 2000));
       } while (currentPage <= maxPages);
 
 

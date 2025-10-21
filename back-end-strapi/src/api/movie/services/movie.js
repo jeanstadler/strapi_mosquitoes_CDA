@@ -20,6 +20,16 @@ module.exports = createCoreService('api::movie.movie', ({ strapi }) => ({
 
     for (const movie of movies) {
 
+      // On vérifie si le film existe déjà dans la base de données
+      const existingMovie = await strapi.db.query('api::movie.movie').findOne({
+        where: { tmdb_id: movie.tmdb_id },
+      });
+
+      if (existingMovie) {
+        // console.log(`Film déjà présent : ${movie.titre} (TMDb ID: ${movie.tmdb_id})`);
+        continue; // On passe au film suivant sans importer celui qui est déjà existant
+      }
+
       const actorsToConnect = []; // Tableau d'acteurs qui seront liés au film
 
       for (const actorId of movie.actors) {
@@ -52,11 +62,6 @@ module.exports = createCoreService('api::movie.movie', ({ strapi }) => ({
           actorsToConnect.push(actor.id);
         }
       }
-
-      // On vérifie si le film existe déjà dans la base de données
-      const existingMovie = await strapi.db.query('api::movie.movie').findOne({
-        where: { tmdb_id: movie.tmdb_id },
-      });
 
       // Vérifie si on retrouve bien au moins le titre du film et son id TMDb
       if (!movie.titre || !movie.tmdb_id) {
