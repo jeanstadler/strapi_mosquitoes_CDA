@@ -1,15 +1,20 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getActorById } from '../services/actorService';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 export default function ActorDetail() {
+  // on récupère l'id de l'acteur depuis les paramètres de la route grace au react router dom
   const { documentId } = useParams();
+  // on récupère la fonction navigate pour naviguer entre les pages
   const navigate = useNavigate();
   const [actor, setActor] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    // on récupère l'acteur depuis l'api grace au documentId
     const fetchActor = async () => {
       try {
         setLoading(true);
@@ -26,19 +31,11 @@ export default function ActorDetail() {
     fetchActor();
   }, [documentId]);
 
+  // si on est en chargement on affiche un message de chargement
   if (loading) {
     return (
       <div className="min-h-screen bg-black">
-        <header className="header">
-          <div className="header-content">
-            <div className="header-top">
-              <button onClick={() => navigate('/')} className="back-button">
-                ←
-              </button>
-              <h2 className="page-title">Chargement...</h2>
-            </div>
-          </div>
-        </header>
+        <Header showBackButton={true} pageTitle="Chargement..." />
         <main className="main-content">
           <div className="detail-card">
             <p className="info-text">Chargement de l'acteur...</p>
@@ -48,19 +45,11 @@ export default function ActorDetail() {
     );
   }
 
+  // si on a une erreur ou si l'acteur n'est pas trouvé on affiche un message d'erreur
   if (error || !actor) {
     return (
       <div className="min-h-screen bg-black">
-        <header className="header">
-          <div className="header-content">
-            <div className="header-top">
-              <button onClick={() => navigate('/')} className="back-button">
-                ←
-              </button>
-              <h2 className="page-title">Erreur</h2>
-            </div>
-          </div>
-        </header>
+        <Header showBackButton={true} pageTitle="Erreur" />
         <main className="main-content">
           <div className="detail-card">
             <p className="info-text">{error || "Acteur non trouvé"}</p>
@@ -70,25 +59,22 @@ export default function ActorDetail() {
     );
   }
 
+  // si tout est ok on affiche le detail de l'acteur
   return (
     <div className="min-h-screen bg-black">
-      <header className="header">
-        <div className="header-content">
-          <div className="header-top">
-            <button onClick={() => navigate('/')} className="back-button">
-              ←
-            </button>
-            <h2 className="page-title">Détail de l'acteur</h2>
-          </div>
-        </div>
-      </header>
+      <Header showBackButton={true} pageTitle="Détail de l'acteur" />
 
       <main className="main-content">
         <div className="detail-card">
           <div className="detail-image-container">
             <div className="detail-image">
+              {/* si l'acteur a une photo on l'affiche sinon on affiche un emoji */}
               {actor.photo ? (
-                <img src={actor.photo} alt={actor.prenom_nom} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '0.75rem' }} />
+                <img
+                  src={actor.photo}
+                  alt={actor.prenom_nom}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '0.75rem' }}
+                />
               ) : (
                 '👤'
               )}
@@ -104,6 +90,7 @@ export default function ActorDetail() {
 
             <div className="info-section">
               <h3 className="info-label">🎬 Films</h3>
+              {/* si l'acteur a des films on les affiche sinon on affiche message "aucun film renseigné" */}
               {actor.movies && actor.movies.length > 0 ? (
                 <div className="related-movies">
                   {actor.movies.map((movie) => (
@@ -120,18 +107,11 @@ export default function ActorDetail() {
                 <p className="info-text">Aucun film renseigné</p>
               )}
             </div>
-
-            <div className="info-section">
-              <h3 className="info-label">🆔 ID TMDB</h3>
-              <p className="info-text">{actor.tmdb_id || "Non renseigné"}</p>
-            </div>
           </div>
         </div>
       </main>
 
-      <footer className="footer">
-        <p>© 2025 CinéInfo - Votre source d'information cinématographique</p>
-      </footer>
+      <Footer />
     </div>
   );
 }

@@ -739,8 +739,10 @@ body {
   .actor-card-content {
     flex-direction: column;
     padding: 1.25rem;
+    padding-bottom: 4rem;
     text-align: center;
     gap: 1rem;
+    position: relative;
   }
 
   .actor-card-image {
@@ -751,6 +753,20 @@ body {
 
   .actor-card-name {
     font-size: 1.125rem;
+  }
+
+  .actor-card .card-button {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    min-width: 50%;
+    text-align: center;
+  }
+
+  .actor-card:hover .card-button {
+    transform: translateX(-50%) scale(1.05);
   }
 
   /* Footer responsive */

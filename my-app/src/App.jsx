@@ -5,6 +5,10 @@ import { getAllMovies } from './services/movieService';
 import { getAllActors } from './services/actorService';
 import MovieDetail from './pages/MovieDetail';
 import ActorDetail from './pages/ActorDetail';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import MovieCard from './components/MovieCard';
+import ActorCard from './components/ActorCard';
 
 function HomePage() {
   const navigate = useNavigate();
@@ -49,25 +53,9 @@ function HomePage() {
   );
 
 
-  // Fonction pour raccourcir la description
-  const truncateDescription = (text, maxLength = 150) => {
-    if (!text) return '';
-    if (text.length <= maxLength) return text;
-    return text.substring(0, maxLength) + '...';
-  };
-
   return (
     <div className="min-h-screen bg-black">
-      <header className="header">
-        <div className="header-content">
-          <div className="logo-section">
-            <div className="logo">
-              🎬
-            </div>
-            <h1 className="app-title">CinéInfo</h1>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <main className="main-content">
         <div className="tabs">
@@ -99,82 +87,41 @@ function HomePage() {
             />
           </div>
         </div>
-
+        {/* si on est sur l'onglet movies */}
         {activeTab === 'movies' && (
           <div className="cards-container">
+            {/* on boucle sur chaque film */}
             {filteredMovies.map(movie => (
-              <div
+              // pour chaque film on affiche la carte
+              <MovieCard
                 key={movie.id}
+                movie={movie}
+                isHovered={hoveredCard === movie.id}
                 onMouseEnter={() => setHoveredCard(movie.id)}
                 onMouseLeave={() => setHoveredCard(null)}
-                className={`card ${hoveredCard === movie.id ? 'hovered' : ''}`}
-              >
-                <div className="card-content">
-                  <div className="card-image">
-                    {movie.affiche ? (
-                      <img src={movie.affiche} alt={movie.titre} />
-                    ) : (
-                      '🎬'
-                    )}
-                  </div>
-                  <div className="card-text">
-                    <div className="card-header">
-                      <h3 className="card-title">{movie.titre}</h3>
-                    </div>
-                    <p className="card-description">{truncateDescription(movie.description)}</p>
-                    <div className="card-meta">
-                      <p><strong>Réalisateur:</strong> {movie.realisateur.map(r => r.name).join(', ')}</p>
-                      <p><strong>Date de sortie:</strong> {movie.date_de_sortie}</p>
-                    </div>
-                  </div>
-                  <button
-                    className="card-button"
-                    onClick={() => navigate(`/movie/${movie.documentId}`)}
-                  >
-                    Voir +
-                  </button>
-                </div>
-              </div>
+              />
             ))}
           </div>
         )}
-
+        {/* si on est sur l'onglet actors */}
         {activeTab === 'actors' && (
           <div className="cards-container">
+            {/* on boucle sur chaque acteur */}
             {filteredActors.map(actor => (
-              <div
+              // pour chaque acteur on affiche la carte
+              <ActorCard
                 key={actor.id}
+                actor={actor}
+                isHovered={hoveredCard === actor.id}
                 onMouseEnter={() => setHoveredCard(actor.id)}
                 onMouseLeave={() => setHoveredCard(null)}
-                className={`actor-card ${hoveredCard === actor.id ? 'hovered' : ''}`}
-              >
-                <div className="actor-card-content">
-                  <div className="actor-card-image">
-                    {actor.photo ? (
-                      <img src={actor.photo} alt={actor.prenom_nom} />
-                    ) : (
-                      '👤'
-                    )}
-                  </div>
-                  <div className="actor-card-info">
-                    <h3 className="actor-card-name">{actor.prenom_nom}</h3>
-                  </div>
-                  <button
-                    className="card-button"
-                    onClick={() => navigate(`/actor/${actor.documentId}`)}
-                  >
-                    Voir +
-                  </button>
-                </div>
-              </div>
+              />
             ))}
           </div>
         )}
       </main>
 
-      <footer className="footer">
-        <p>© 2025 CinéInfo - Votre source d'information cinématographique</p>
-      </footer>
+      <Footer />
     </div>
   );
 }
