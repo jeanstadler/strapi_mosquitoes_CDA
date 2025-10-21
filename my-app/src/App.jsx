@@ -1,9 +1,13 @@
 import { useState, useEffect } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import './App.css';
 import { getAllMovies } from './services/movieService';
 import { getAllActors } from './services/actorService';
+import MovieDetail from './pages/MovieDetail';
+import ActorDetail from './pages/ActorDetail';
 
-export default function App() {
+function HomePage() {
+  const navigate = useNavigate();
   //onglet actif : movies ou actors
   const [activeTab, setActiveTab] = useState('movies');
   //carte survolée (pour l'effet de survol)
@@ -45,7 +49,13 @@ export default function App() {
   );
 
 
-  // page principale
+  // Fonction pour raccourcir la description
+  const truncateDescription = (text, maxLength = 150) => {
+    if (!text) return '';
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength) + '...';
+  };
+
   return (
     <div className="min-h-screen bg-black">
       <header className="header">
@@ -56,24 +66,25 @@ export default function App() {
             </div>
             <h1 className="app-title">CinéInfo</h1>
           </div>
-          <div className="tabs">
-            <button
-              onClick={() => setActiveTab('movies')}
-              className={`tab-button ${activeTab === 'movies' ? 'active' : ''}`}
-            >
-              🎬 Films
-            </button>
-            <button
-              onClick={() => setActiveTab('actors')}
-              className={`tab-button ${activeTab === 'actors' ? 'active' : ''}`}
-            >
-              👤 Acteurs
-            </button>
-          </div>
         </div>
       </header>
 
       <main className="main-content">
+        <div className="tabs">
+          <button
+            onClick={() => setActiveTab('movies')}
+            className={`tab-button ${activeTab === 'movies' ? 'active' : ''}`}
+          >
+            🎬 Films
+          </button>
+          <button
+            onClick={() => setActiveTab('actors')}
+            className={`tab-button ${activeTab === 'actors' ? 'active' : ''}`}
+          >
+            👤 Acteurs
+          </button>
+        </div>
+
         <div className="search-container">
           <div className="search-wrapper">
             <span className="search-icon">🔍</span>
@@ -110,7 +121,7 @@ export default function App() {
                     <div className="card-header">
                       <h3 className="card-title">{movie.titre}</h3>
                     </div>
-                    <p className="card-description">{movie.description}</p>
+                    <p className="card-description">{truncateDescription(movie.description)}</p>
                     <div className="card-meta">
                       <p><strong>Réalisateur:</strong> {movie.realisateur.map(r => r.name).join(', ')}</p>
                       <p><strong>Date de sortie:</strong> {movie.date_de_sortie}</p>
@@ -118,6 +129,7 @@ export default function App() {
                   </div>
                   <button
                     className="card-button"
+                    onClick={() => navigate(`/movie/${movie.documentId}`)}
                   >
                     Voir +
                   </button>
@@ -149,6 +161,7 @@ export default function App() {
                   </div>
                   <button
                     className="card-button"
+                    onClick={() => navigate(`/actor/${actor.documentId}`)}
                   >
                     Voir +
                   </button>
@@ -163,5 +176,15 @@ export default function App() {
         <p>© 2025 CinéInfo - Votre source d'information cinématographique</p>
       </footer>
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/movie/:documentId" element={<MovieDetail />} />
+      <Route path="/actor/:documentId" element={<ActorDetail />} />
+    </Routes>
   );
 }

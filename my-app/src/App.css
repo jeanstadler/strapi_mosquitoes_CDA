@@ -68,6 +68,8 @@ body {
 .tabs {
   display: flex;
   gap: 0.75rem;
+  justify-content: center;
+  margin-bottom: 2rem;
 }
 
 .tab-button {
@@ -445,6 +447,8 @@ body {
   border-radius: 1rem;
   padding: 2rem;
   box-shadow: 0 0 40px rgba(6, 182, 212, 0.1);
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .detail-image-container {
@@ -623,4 +627,216 @@ body {
 
 .related-movie-link:hover {
   color: #22d3ee;
+}
+
+/* Responsive Design - Mobile */
+@media (max-width: 768px) {
+  /* Header responsive */
+  .header {
+    padding: 1rem 0;
+  }
+
+  .header-content {
+    padding: 0 1rem;
+  }
+
+  .logo-section {
+    margin-bottom: 1rem;
+  }
+
+  .logo {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.25rem;
+  }
+
+  .app-title {
+    font-size: 1.5rem;
+  }
+
+  /* Main content responsive */
+  .main-content {
+    padding: 1.5rem 1rem;
+  }
+
+  /* Tabs responsive */
+  .tabs {
+    margin-bottom: 1.5rem;
+  }
+
+  .tab-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+
+  /* Search responsive */
+  .search-container {
+    margin-bottom: 1.5rem;
+  }
+
+  .search-input {
+    padding: 0.875rem 0.875rem 0.875rem 2.75rem;
+    font-size: 0.875rem;
+  }
+
+  .search-icon {
+    left: 0.875rem;
+    font-size: 1rem;
+  }
+
+  /* Movie Card responsive - Layout en colonne */
+  .card-content {
+    flex-direction: column;
+    padding: 0;
+    gap: 0;
+    position: relative;
+  }
+
+  .card-image {
+    width: 60%;
+    height: auto;
+    aspect-ratio: 2/3;
+    border-radius: 0.75rem;
+    border: none;
+    margin: 1rem auto 0 auto;
+  }
+
+  .card-text {
+    padding: 1.25rem;
+    padding-bottom: 4rem;
+  }
+
+  .card-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .card-description {
+    font-size: 0.875rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .card-meta {
+    font-size: 0.75rem;
+  }
+
+  .card-button {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    min-width: 50%;
+    text-align: center;
+    align-self: center;
+  }
+
+  .card:hover .card-button {
+    transform: translateX(-50%) scale(1.05);
+  }
+
+  /* Actor Card responsive */
+  .actor-card-content {
+    flex-direction: column;
+    padding: 1.25rem;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .actor-card-image {
+    width: 8rem;
+    height: 8rem;
+    margin: 0 auto;
+  }
+
+  .actor-card-name {
+    font-size: 1.125rem;
+  }
+
+  /* Footer responsive */
+  .footer {
+    margin-top: 3rem;
+    padding: 1.5rem 1rem;
+  }
+
+  .footer p {
+    font-size: 0.75rem;
+  }
+
+  /* Detail page responsive */
+  .detail-card {
+    padding: 1.5rem;
+  }
+
+  .detail-image {
+    width: 100%;
+    max-width: 16rem;
+    height: auto;
+    aspect-ratio: 2/3;
+  }
+
+  .detail-title {
+    font-size: 1.75rem;
+    text-align: center;
+  }
+
+  .detail-info {
+    gap: 1.25rem;
+  }
+
+  .info-label {
+    font-size: 1.125rem;
+  }
+
+  .info-text {
+    font-size: 1rem;
+  }
+
+  .actor-link {
+    font-size: 1rem;
+  }
+
+  /* Actor detail page responsive */
+  .actor-profile-image {
+    width: 100%;
+    max-width: 16rem;
+    height: auto;
+    aspect-ratio: 1/1;
+  }
+
+  .actor-info-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .actor-info-label {
+    font-size: 1.125rem;
+  }
+
+  .actor-info-value {
+    font-size: 1.25rem;
+  }
+
+  .actor-info-text {
+    font-size: 1rem;
+  }
+
+  .related-movie-link {
+    font-size: 1rem;
+  }
+}
+
+/* Responsive Design - Très petit mobile */
+@media (max-width: 480px) {
+  .app-title {
+    font-size: 1.25rem;
+  }
+
+  .card-button {
+    width: 90%;
+  }
+
+  .detail-title {
+    font-size: 1.5rem;
+  }
 }
