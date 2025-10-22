@@ -1,34 +1,54 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { BsFillPersonFill } from "react-icons/bs";
+import { clearToken, isAuthenticated } from "../services/auth";
 
 export default function Header({ showBackButton = false, showAdminLogin = false, pageTitle = null }) {
   const navigate = useNavigate();
 
+  function handleLogout() {
+    clearToken();
+    navigate('/');
+  }
+
   return (
     <header className="header">
       <div className="header-content">
-        <div className="logo-section">
-          <div className="logo">
-            🎬
+        <div className="header-left-section">
+          <div className="logo-section">
+            <div className="logo">
+              🎬
+            </div>
+            <h1 className="app-title">CinéInfo</h1>
           </div>
-          <h1 className="app-title">CinéInfo</h1>
+
+          {showBackButton && (
+            <div className="header-top">
+              <button onClick={() => navigate('/')} className="back-button">
+                ←
+              </button>
+              {pageTitle && <h2 className="page-title">{pageTitle}</h2>}
+            </div>
+          )}
+
         </div>
 
-        {showBackButton && (
-          <div className="header-top">
-            <button onClick={() => navigate('/')} className="back-button">
-              ←
+        {showAdminLogin && !isAuthenticated() && (
+          <Link to="/admin/login" className="admin-login-section">
+            <BsFillPersonFill color="inherit" className="admin-login" />
+            <span className="admin-login">Se connecter</span>
+          </Link>
+        )}
+
+        {showAdminLogin && isAuthenticated() && (
+          <div>
+            <Link to="/admin/dashboard" className="admin-login">Tableau de bord</Link>
+            <button onClick={handleLogout} className="admin-login" style={{ marginLeft: "0.5rem", cursor: "pointer", background: "none", border: "none", color: "#06b6d4" }}>
+              Déconnexion
             </button>
-            {pageTitle && <h2 className="page-title">{pageTitle}</h2>}
           </div>
         )}
 
-        {showAdminLogin && (
-          <div class="admin_login_section">
-            <BsFillPersonFill color="inherit" className="admin_login" />
-            <a class="admin_login" href="/admin">Se connecter</a>
-          </div>
-        )}
+
       </div>
     </header>
   );

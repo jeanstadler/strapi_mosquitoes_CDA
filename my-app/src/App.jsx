@@ -10,6 +10,8 @@ import Footer from './components/Footer';
 import MovieCard from './components/MovieCard';
 import ActorCard from './components/ActorCard';
 import AdminLogin from './pages/AdminLogin';
+import ProtectedRoute from './components/ProtectedRoute';
+import AdminDashboard from './pages/AdminDashboard';
 
 function HomePage() {
   const navigate = useNavigate();
@@ -133,7 +135,15 @@ export default function App() {
       <Route path="/" element={<HomePage />} />
       <Route path="/movie/:documentId" element={<MovieDetail />} />
       <Route path="/actor/:documentId" element={<ActorDetail />} />
-      <Route path="/admin" element={<AdminLogin />} />
+      <Route path="/admin/login" element={<AdminLogin />} />
+      <Route
+        path="/admin/dashboard"
+        element={
+          <ProtectedRoute>
+            <AdminDashboard />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   );
 }
