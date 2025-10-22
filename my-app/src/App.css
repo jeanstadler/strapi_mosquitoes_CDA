@@ -181,6 +181,16 @@ body {
   padding: 2.5rem 1.5rem;
 }
 
+.admin-dashboard{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; 
+}
+
+.admin-content{
+  flex:1;
+}
+
 /* Search */
 .search-container {
   margin-bottom: 2.5rem;
