@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import './App.css';
-import { getAllMovies } from './services/movieService';
-import { getAllActors } from './services/actorService';
+import { getAllMovies, getMoviesPaginated } from './services/movieService';
+import { getAllActors, getActorsPaginated } from './services/actorService';
 import MovieDetail from './pages/MovieDetail';
 import ActorDetail from './pages/ActorDetail';
 import LegalNotices from './pages/LegalNotices';
@@ -24,34 +24,51 @@ function HomePage() {
   const [movies, setMovies] = useState([]);
   const [actors, setActors] = useState([]);
 
-  // Récupération des films depuis l'API
+  // Constante pour la taille de page
+  const PAGE_SIZE = 10;
+
+  // États pour la pagination des films
+  const [currentMoviePage, setCurrentMoviePage] = useState(1);
+  const [totalMoviePages, setTotalMoviePages] = useState(1);
+
+  // États pour la pagination des acteurs
+  const [currentActorPage, setCurrentActorPage] = useState(1);
+  const [totalActorPages, setTotalActorPages] = useState(1);
+
+  // Récupération des films depuis l'API avec pagination
   useEffect(() => {
     const fetchMovies = async () => {
-      const response = await getAllMovies();
+      const response = await getMoviesPaginated(currentMoviePage, PAGE_SIZE, searchQuery);
       setMovies(response.data);
+      // Récupération du nombre total de pages depuis les métadonnées
+      setTotalMoviePages(response.meta.pagination.pageCount);
     };
     fetchMovies();
-  }, []);
+  }, [currentMoviePage, searchQuery]); // ← Se réexécute si la page OU la recherche change
 
-  // Récupération des acteurs depuis l'API
+  // Récupération des acteurs depuis l'API avec pagination
   useEffect(() => {
     const fetchActors = async () => {
-      const response = await getAllActors();
+      const response = await getActorsPaginated(currentActorPage, PAGE_SIZE, searchQuery);
       setActors(response.data);
+      // Récupération du nombre total de pages depuis les métadonnées
+      setTotalActorPages(response.meta.pagination.pageCount);
     };
     fetchActors();
-  }, []);
+  }, [currentActorPage, searchQuery]); // Re-exécute quand la page ou la recherche change
 
+  // Réinitialise la page à 1 quand la recherche change
+  useEffect(() => {
+    setCurrentMoviePage(1);
+    setCurrentActorPage(1);
+  }, [searchQuery]);  // ← "dès que searchQuery change, exécute ce code"
 
-  // Filtrage des films
-  const filteredMovies = movies.filter(movie =>
-    movie.titre.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  // Filtrage des acteurs
-  const filteredActors = actors.filter(actor =>
-    actor.prenom_nom.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Réinitialise la page à 1 et la recherche quand on change d'onglet
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+    setCurrentMoviePage(1);
+    setCurrentActorPage(1);
+  };
 
 
   return (
@@ -61,13 +78,13 @@ function HomePage() {
       <main className="main-content">
         <div className="tabs">
           <button
-            onClick={() => setActiveTab('movies')}
+            onClick={() => handleTabChange('movies')}
             className={`tab-button ${activeTab === 'movies' ? 'active' : ''}`}
           >
             🎬 Films
           </button>
           <button
-            onClick={() => setActiveTab('actors')}
+            onClick={() => handleTabChange('actors')}
             className={`tab-button ${activeTab === 'actors' ? 'active' : ''}`}
           >
             👤 Acteurs
@@ -81,8 +98,8 @@ function HomePage() {
               type="text"
               placeholder={activeTab === 'movies' ? 'Rechercher un film...' : 'Rechercher un acteur...'}
               className="search-input"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              value={searchQuery} // ← L'état qui stocke ce que tu tapes
+              onChange={(e) => setSearchQuery(e.target.value)} // ← Quand tu tapes, ça change 
               onFocus={(e) => e.target.classList.add('focused')}
               onBlur={(e) => e.target.classList.remove('focused')}
             />
@@ -90,35 +107,79 @@ function HomePage() {
         </div>
         {/* si on est sur l'onglet movies */}
         {activeTab === 'movies' && (
-          <div className="cards-container">
-            {/* on boucle sur chaque film */}
-            {filteredMovies.map(movie => (
-              // pour chaque film on affiche la carte
-              <MovieCard
-                key={movie.id}
-                movie={movie}
-                isHovered={hoveredCard === movie.id}
-                onMouseEnter={() => setHoveredCard(movie.id)}
-                onMouseLeave={() => setHoveredCard(null)}
-              />
-            ))}
-          </div>
+          <>
+            <div className="cards-container">
+              {/* on boucle sur chaque film */}
+              {movies.map(movie => (
+                // pour chaque film on affiche la carte
+                <MovieCard
+                  key={movie.id}
+                  movie={movie}
+                  isHovered={hoveredCard === movie.id}
+                  onMouseEnter={() => setHoveredCard(movie.id)}
+                  onMouseLeave={() => setHoveredCard(null)}
+                />
+              ))}
+            </div>
+            {/* Contrôles de pagination pour les films */}
+            <div className="pagination">
+              <button
+                onClick={() => setCurrentMoviePage(currentMoviePage - 1)}
+                disabled={currentMoviePage === 1}
+                className="pagination-button"
+              >
+                ← Précédent
+              </button>
+              <span className="pagination-info">
+                Page {currentMoviePage} sur {totalMoviePages}
+              </span>
+              <button
+                onClick={() => setCurrentMoviePage(currentMoviePage + 1)}
+                disabled={currentMoviePage === totalMoviePages}
+                className="pagination-button"
+              >
+                Suivant →
+              </button>
+            </div>
+          </>
         )}
         {/* si on est sur l'onglet actors */}
         {activeTab === 'actors' && (
-          <div className="cards-container">
-            {/* on boucle sur chaque acteur */}
-            {filteredActors.map(actor => (
-              // pour chaque acteur on affiche la carte
-              <ActorCard
-                key={actor.id}
-                actor={actor}
-                isHovered={hoveredCard === actor.id}
-                onMouseEnter={() => setHoveredCard(actor.id)}
-                onMouseLeave={() => setHoveredCard(null)}
-              />
-            ))}
-          </div>
+          <>
+            <div className="cards-container">
+              {/* on boucle sur chaque acteur */}
+              {actors.map(actor => (
+                // pour chaque acteur on affiche la carte
+                <ActorCard
+                  key={actor.id}
+                  actor={actor}
+                  isHovered={hoveredCard === actor.id}
+                  onMouseEnter={() => setHoveredCard(actor.id)}
+                  onMouseLeave={() => setHoveredCard(null)}
+                />
+              ))}
+            </div>
+            {/* Contrôles de pagination pour les acteurs */}
+            <div className="pagination">
+              <button
+                onClick={() => setCurrentActorPage(currentActorPage - 1)}
+                disabled={currentActorPage === 1}
+                className="pagination-button"
+              >
+                ← Précédent
+              </button>
+              <span className="pagination-info">
+                Page {currentActorPage} sur {totalActorPages}
+              </span>
+              <button
+                onClick={() => setCurrentActorPage(currentActorPage + 1)}
+                disabled={currentActorPage === totalActorPages}
+                className="pagination-button"
+              >
+                Suivant →
+              </button>
+            </div>
+          </>
         )}
       </main>
 
