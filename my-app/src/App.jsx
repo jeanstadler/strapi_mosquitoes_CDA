@@ -5,6 +5,7 @@ import { getAllMovies } from './services/movieService';
 import { getAllActors } from './services/actorService';
 import MovieDetail from './pages/MovieDetail';
 import ActorDetail from './pages/ActorDetail';
+import LegalNotices from './pages/LegalNotices';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import MovieCard from './components/MovieCard';
@@ -144,6 +145,7 @@ export default function App() {
           </ProtectedRoute>
         }
       />
+      <Route path="/legal" element={<LegalNotices />} />
     </Routes>
   );
 }
