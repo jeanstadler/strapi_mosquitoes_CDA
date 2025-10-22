@@ -32,19 +32,24 @@ export default function Header({ showBackButton = false, showAdminLogin = false,
 
         </div>
 
-        {showAdminLogin && !isAuthenticated() && (
-          <Link to="/admin/login" className="admin-login-section">
-            <BsFillPersonFill color="inherit" className="admin-login" />
-            <span className="admin-login">Se connecter</span>
-          </Link>
-        )}
-
-        {showAdminLogin && isAuthenticated() && (
+        {showAdminLogin && (
           <div>
-            <Link to="/admin/dashboard" className="admin-login">Tableau de bord</Link>
-            <button onClick={handleLogout} className="admin-login" style={{ marginLeft: "0.5rem", cursor: "pointer", background: "none", border: "none", color: "#06b6d4" }}>
-              Déconnexion
-            </button>
+            {isAuthenticated() ? (
+              <div>
+                <Link to="/admin/dashboard" className="admin-login">Tableau de bord</Link>
+                <button
+                  onClick={handleLogout}
+                  className="admin-login admin-logout-btn"
+                >
+                  Déconnexion
+                </button>
+              </div>
+            ) : (
+              <Link to="/admin/login" className="admin-login admin-login-section">
+                <BsFillPersonFill color="inherit" className="admin-login" />
+                <span className="admin-login">Se connecter</span>
+              </Link>
+            )}
           </div>
         )}
 

@@ -139,6 +139,15 @@ body {
   color: inherit;
 }
 
+.admin-logout-btn {
+  background: none;
+  border: none;
+}
+
+.admin-logout-btn:hover {
+  color: #535bf2;
+}
+
 .admin-login-section:hover {
   color: #535bf2;
 }
