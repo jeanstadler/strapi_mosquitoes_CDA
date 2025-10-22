@@ -70,6 +70,15 @@ function HomePage() {
     setCurrentActorPage(1);
   };
 
+  // Fonction pour remonter automatiquement en haut de la page
+  // Utilisée lors du changement de page de la pagination
+  const scrollToTop = () => {
+    // window.scrollTo(x, y) : permet de faire défiler la page à une position précise
+    // x = 0 : position horizontale (tout à gauche)
+    // y = 0 : position verticale (tout en haut)
+    window.scrollTo(0, 0);
+  };
+
 
   return (
     <div className="min-h-screen bg-black">
@@ -124,7 +133,10 @@ function HomePage() {
             {/* Contrôles de pagination pour les films */}
             <div className="pagination">
               <button
-                onClick={() => setCurrentMoviePage(currentMoviePage - 1)}
+                onClick={() => {
+                  setCurrentMoviePage(currentMoviePage - 1); // Change la page vers la précédente
+                  scrollToTop(); // Remonte en haut de la page
+                }}
                 disabled={currentMoviePage === 1}
                 className="pagination-button"
               >
@@ -134,7 +146,10 @@ function HomePage() {
                 Page {currentMoviePage} sur {totalMoviePages}
               </span>
               <button
-                onClick={() => setCurrentMoviePage(currentMoviePage + 1)}
+                onClick={() => {
+                  setCurrentMoviePage(currentMoviePage + 1); // Change la page vers la suivante
+                  scrollToTop(); // Remonte en haut de la page
+                }}
                 disabled={currentMoviePage === totalMoviePages}
                 className="pagination-button"
               >
@@ -162,7 +177,10 @@ function HomePage() {
             {/* Contrôles de pagination pour les acteurs */}
             <div className="pagination">
               <button
-                onClick={() => setCurrentActorPage(currentActorPage - 1)}
+                onClick={() => {
+                  setCurrentActorPage(currentActorPage - 1); // Change la page vers la précédente
+                  scrollToTop(); // Remonte en haut de la page
+                }}
                 disabled={currentActorPage === 1}
                 className="pagination-button"
               >
@@ -172,7 +190,10 @@ function HomePage() {
                 Page {currentActorPage} sur {totalActorPages}
               </span>
               <button
-                onClick={() => setCurrentActorPage(currentActorPage + 1)}
+                onClick={() => {
+                  setCurrentActorPage(currentActorPage + 1); // Change la page vers la suivante
+                  scrollToTop(); // Remonte en haut de la page
+                }}
                 disabled={currentActorPage === totalActorPages}
                 className="pagination-button"
               >
