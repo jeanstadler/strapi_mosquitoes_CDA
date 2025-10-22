@@ -14,10 +14,11 @@ const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 const TMDB_PERSON_URL = `${TMDB_BASE_URL}/person`;
 
 module.exports = createCoreService('api::movie.movie', ({ strapi }) => ({
-
+  
   async syncFrenchMovies() {
     const movies = await tmdbService.fetchFrenchMovies();
-
+    let count = 0;
+    
     for (const movie of movies) {
 
       // On vérifie si le film existe déjà dans la base de données
@@ -84,8 +85,13 @@ module.exports = createCoreService('api::movie.movie', ({ strapi }) => ({
           },
         });
       }
+      count++
     }
 
-    return movies.length;
+    // return movies.length;
+    return {
+      totalMovies: movies.length,
+      count
+    };
   },
 }));
