@@ -2,7 +2,7 @@
 console.log('policy is running');
 module.exports = async (policyContext, config, { strapi }) => {
 
-    const user = policyContext.state.users;
+    const user = policyContext.state.user;
     console.log('Utilisateur courant :', user);
 
     // Si pas connecté → erreur 401
