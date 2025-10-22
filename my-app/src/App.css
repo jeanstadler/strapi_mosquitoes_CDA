@@ -139,6 +139,12 @@ body {
   color: inherit;
 }
 
+.admin-nav-links{
+ display: flex;
+ align-items: center;
+ gap: 1rem;
+}
+
 .admin-logout-btn {
   background: none;
   border: none;
@@ -770,7 +776,6 @@ body {
 /* === Admin Dashboard === */
 
 .admin-content {
-  max-width: 800px;
   margin: 0 auto;
   padding: 3rem 1.5rem;
   text-align: center;

@@ -35,7 +35,7 @@ export default function Header({ showBackButton = false, showAdminLogin = false,
         {showAdminLogin && (
           <div>
             {isAuthenticated() ? (
-              <div>
+              <div className="admin-nav-links">
                 <Link to="/admin/dashboard" className="admin-login">Tableau de bord</Link>
                 <button
                   onClick={handleLogout}
