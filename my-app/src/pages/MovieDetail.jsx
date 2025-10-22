@@ -35,7 +35,7 @@ export default function MovieDetail() {
   if (loading) {
     return (
       <div className="min-h-screen bg-black">
-        <Header showBackButton={true} pageTitle="Chargement..." />
+        <Header showBackButton={true} showAdminLogin={true} pageTitle="Chargement..." />
         <main className="main-content">
           <div className="detail-card">
             <p className="info-text">Chargement du film...</p>
@@ -49,7 +49,7 @@ export default function MovieDetail() {
   if (error || !movie) {
     return (
       <div className="min-h-screen bg-black">
-        <Header showBackButton={true} pageTitle="Erreur" />
+        <Header showBackButton={true} showAdminLogin={true} pageTitle="Erreur" />
         <main className="main-content">
           <div className="detail-card">
             <p className="info-text">{error || "Film non trouvé"}</p>
@@ -62,7 +62,7 @@ export default function MovieDetail() {
   // si tout est ok on affiche le detail du film
   return (
     <div className="min-h-screen bg-black">
-      <Header showBackButton={true} pageTitle="Détail du film" />
+      <Header showBackButton={true} showAdminLogin={true} pageTitle="Détail du film" />
 
       <main className="main-content">
         <div className="detail-card">

@@ -35,7 +35,7 @@ export default function ActorDetail() {
   if (loading) {
     return (
       <div className="min-h-screen bg-black">
-        <Header showBackButton={true} pageTitle="Chargement..." />
+        <Header showBackButton={true} showAdminLogin={true} pageTitle="Chargement..." />
         <main className="main-content">
           <div className="detail-card">
             <p className="info-text">Chargement de l'acteur...</p>
@@ -49,7 +49,7 @@ export default function ActorDetail() {
   if (error || !actor) {
     return (
       <div className="min-h-screen bg-black">
-        <Header showBackButton={true} pageTitle="Erreur" />
+        <Header showBackButton={true} showAdminLogin={true} pageTitle="Erreur" />
         <main className="main-content">
           <div className="detail-card">
             <p className="info-text">{error || "Acteur non trouvé"}</p>
@@ -62,7 +62,7 @@ export default function ActorDetail() {
   // si tout est ok on affiche le detail de l'acteur
   return (
     <div className="min-h-screen bg-black">
-      <Header showBackButton={true} pageTitle="Détail de l'acteur" />
+      <Header showBackButton={true} showAdminLogin={true} pageTitle="Détail de l'acteur" />
 
       <main className="main-content">
         <div className="detail-card">

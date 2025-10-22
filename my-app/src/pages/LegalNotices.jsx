@@ -12,7 +12,7 @@ export default function LegalNotices() {
 
       <main className="legal-content">
         <div className="legal-container">
-          <button className="back-button" onClick={() => navigate('/')}>
+          <button className="legal-notice-back-button" onClick={() => navigate('/')}>
             ← Retour
           </button>
 

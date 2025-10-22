@@ -15,7 +15,7 @@
   box-shadow: 0 0 30px rgba(6, 182, 212, 0.1);
 }
 
-.back-button {
+.legal-notice-back-button {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -30,7 +30,7 @@
   transition: all 300ms;
 }
 
-.back-button:hover {
+.legal-notice-back-button:hover {
   background-color: #27272a;
   box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
   transform: translateX(-2px);
@@ -170,7 +170,7 @@
     font-size: 0.875rem;
   }
 
-  .back-button {
+  .legal-notice-back-button {
     padding: 0.6rem 1.2rem;
     font-size: 0.875rem;
     margin-bottom: 1.5rem;
