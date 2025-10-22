@@ -5,6 +5,7 @@ import { getAllMovies } from './services/movieService';
 import { getAllActors } from './services/actorService';
 import MovieDetail from './pages/MovieDetail';
 import ActorDetail from './pages/ActorDetail';
+import LegalNotices from './pages/LegalNotices';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import MovieCard from './components/MovieCard';
@@ -132,6 +133,7 @@ export default function App() {
       <Route path="/" element={<HomePage />} />
       <Route path="/movie/:documentId" element={<MovieDetail />} />
       <Route path="/actor/:documentId" element={<ActorDetail />} />
+      <Route path="/legal" element={<LegalNotices />} />
     </Routes>
   );
 }
