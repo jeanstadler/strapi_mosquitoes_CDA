@@ -68,7 +68,7 @@ module.exports = { //rendu de la requête exporté, servant à récupérer les �
         const data = response.data;
         const movies = data.results;
 
-        console.log(`📄 Page ${currentPage}/${data.total_pages} : ${movies.length} films`);
+        // console.log(`📄 Page ${currentPage}/${data.total_pages} : ${movies.length} films`);
 
         allMovies.push(...movies);
         maxPages = data.total_pages;
