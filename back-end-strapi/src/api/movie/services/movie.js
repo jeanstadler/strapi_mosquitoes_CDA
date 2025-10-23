@@ -27,8 +27,7 @@ module.exports = createCoreService('api::movie.movie', ({ strapi }) => ({
       });
 
       if (existingMovie) {
-        // console.log(`Film déjà présent : ${movie.titre} (TMDb ID: ${movie.tmdb_id})`);
-        continue; // On passe au film suivant sans importer celui qui est déjà existant
+        continue; // On passe au film suivant sans importer celui en cours et qui est déjà existant
       }
 
       const actorsToConnect = []; // Tableau d'acteurs qui seront liés au film
@@ -88,7 +87,6 @@ module.exports = createCoreService('api::movie.movie', ({ strapi }) => ({
       count++
     }
 
-    // return movies.length;
     return {
       totalMovies: movies.length,
       count
