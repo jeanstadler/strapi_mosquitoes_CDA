@@ -42,10 +42,10 @@ body {
 }
 
 .logo {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 4.5rem;
+  height: 4.5rem;
   background-color: #06b6d4;
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -908,8 +908,8 @@ body {
   }
 
   .logo {
-    width: 2rem;
-    height: 2rem;
+    width: 3.5rem;
+    height: 3.5rem;
     font-size: 1.25rem;
   }
 

@@ -14,11 +14,12 @@ export default function Header({ showBackButton = false, showAdminLogin = false,
     <header className="header">
       <div className="header-content">
         <div className="header-left-section">
-          <div className="logo-section">
-            <div className="logo">
+          <div className="logo-section" onClick={() => navigate('/')}>
+            <img src="/logo_zoomin.png" alt="Logo" className="logo" />
+            {/* <div className="logo">
               🎬
             </div>
-            <h1 className="app-title">CinéInfo</h1>
+            <h1 className="app-title">CinéInfo</h1> */}
           </div>
 
           {showBackButton && (
