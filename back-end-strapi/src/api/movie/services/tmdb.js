@@ -30,7 +30,7 @@ async function getActor(movieId) { //Fonction pour récupérer les acteurs
     });
 
     // Puis on stock les 10 premiers acteurs (avec .slice) dans une constante 'actors'
-    const actors = response.data.cast.slice(0, 10).map(act => act.id);
+    const actors = response.data.cast.slice(0, 6).map(act => act.id);
 
     return actors;
   } catch (e) {
